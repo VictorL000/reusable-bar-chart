@@ -35,7 +35,7 @@ p {
   width: auto;
   display: flex;
   flex-direction: column;
-  --background-color: white;
+  --background-color: #faf8f6;
   --positive-color: #76d660;
   --negative-color: #c78383;
   --neutral-color: #b0b0b0;
@@ -43,13 +43,14 @@ p {
   --text-color: black;
   color: var(--text-color);
   background-color: var(--background-color);
+  border-radius: 4px;
 }
 
 .bar-graph.dark {
   --text-color: white;
   --background-color: #454545;
   --line-color: #dddcd4;
-  --neutral-color: #d8d8d8;
+  --neutral-color: #f1eeee;
 }
 
 .graph-container {
@@ -64,7 +65,7 @@ p {
   gap: 10px;
   height: 100%;
   grid-area: 1/1;
-  padding: 0px 10px;
+  padding: 0px 50px 0px 10px;
 }
 
 .bar-container-grid {
@@ -96,6 +97,7 @@ p {
 .tick {
   flex: 1 1 auto;
   border-top: 1px solid grey;
+  margin-right: 30px;
 }
 
 .tick-label {
@@ -181,7 +183,7 @@ p {
 
 .y-label p {
   writing-mode: sideways-lr;
-  margin-left: 5px;
+  padding: 5px;
 }
 
 .testing-control-board {

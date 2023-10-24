@@ -22,7 +22,7 @@ const BarGraph = ({
   values,
   labels = values.map((i) => i.toString()) || [],
   numTicks = 10,
-  yLabel: yLabel = "",
+  yLabel = "",
   title = "",
   xLabel = "",
   darkMode = false,
@@ -41,6 +41,7 @@ const BarGraph = ({
 
   const maxValue = Math.max(...values.map(Math.abs));
 
+  // If negative numbers, want to allocate half the ticks to negative numbers
   numTicks /= negativeNumbers ? 2 : 1;
 
   const idealTicks = maxValue / numTicks;
@@ -55,13 +56,13 @@ const BarGraph = ({
   ];
 
   // Gets the closest friendly tick to the ideal tick
-  const friendlyTick = friendlyDigits.reduce(function (best, cur) {
-    return cur - Math.abs(idealTicks) >= 0 &&
-      Math.abs(cur) - idealTicks < Math.abs(best) - idealTicks
-      ? cur
-      : best;
-  }, Number.MAX_SAFE_INTEGER);
-
+  const friendlyTick = friendlyDigits.reduce(
+    (best, cur) =>
+      cur - Math.abs(idealTicks) >= 0 && Math.abs(cur) - idealTicks < Math.abs(best) - idealTicks
+        ? cur
+        : best,
+    Number.MAX_SAFE_INTEGER
+  );
   const ticks: number[] = [];
   if (negativeNumbers) {
     for (let i = numTicks; i > 0; i--) {
