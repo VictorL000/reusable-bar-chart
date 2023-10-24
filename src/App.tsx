@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react";
 import "./App.css";
 
 type BarGraphProps = {
@@ -8,6 +8,7 @@ type BarGraphProps = {
   yLabel?: string;
   title?: string;
   xLabel?: string;
+  darkMode?: boolean;
 };
 
 type BarProps = {
@@ -24,10 +25,12 @@ const BarGraph = ({
   yLabel: yLabel = "",
   title = "",
   xLabel = "",
+  darkMode = false,
 }: BarGraphProps) => {
   const [negativeNumbers, setNegativeNumbers] = useState(false);
 
   useEffect(() => {
+    setNegativeNumbers(false);
     values.forEach((value) => {
       if (value < 0) {
         setNegativeNumbers(true);
@@ -70,7 +73,7 @@ const BarGraph = ({
   }
   const lastTick = friendlyTick * numTicks;
   return (
-    <div className="bar-graph">
+    <div className={`bar-graph ${darkMode ? " dark" : ""}`}>
       <h1 className="title">{title}</h1>
       <div className="graph-container">
         <div className="y-label">
@@ -141,32 +144,70 @@ const Bar = ({ value, label = value.toString(), maxValue, negativeNumbers }: Bar
   );
 };
 function App() {
-  const [values] = useState([90, 85, 32, 90]);
-  const [labels] = useState(["Jan", "Feb", "Mar", "Apr"]);
+  const [values, setValues] = useState([90, 85, 32, 90]);
+  const [label, setLabel] = useState(["Jan", "Feb", "Mar", "Apr"]);
+  const [numTicks, setNumTicks] = useState(10);
+  const [yLabel, setYLabel] = useState("Love (out of 100).");
+  const [xLabel, setXLabel] = useState("Month");
+  const [title, setTitle] = useState("How much I love each month.");
+  const [darkMode, setDarkMode] = useState(false);
   return (
     <>
       <div className="demo-container">
         <BarGraph
           values={values}
-          labels={labels}
-          numTicks={10}
-          yLabel="Love (out of 100)."
-          xLabel="Month"
-          title="How much I love each month."
+          labels={label}
+          numTicks={numTicks}
+          yLabel={yLabel}
+          xLabel={xLabel}
+          title={title}
+          darkMode={darkMode}
         />
-        <div className="testing-control-board">
-          <div className="testing-control">
-            <label>Values:</label>
-            <input type="text" value={values} onChange={(e) => console.log(e.target.value)} />
-          </div>
-          <div className="testing-control">
-            <label>Labels:</label>
-            <input type="text" value={labels} onChange={(e) => console.log(e.target.value)} />
-          </div>
-          <div className="testing-control">
-            <label>NumTicks:</label>
-            <input type="text" value={10} onChange={(e) => console.log(e.target.value)} />
-          </div>
+      </div>
+      <div className="testing-control-board">
+        <div className="testing-control">
+          <label>Values:</label>
+          <input
+            defaultValue={values.toString()}
+            type="text"
+            onChange={(e) => setValues(e.target.value.split(",").map(Number))}
+          />
+        </div>
+        <div className="testing-control">
+          <label>Labels:</label>
+          <input
+            defaultValue={label.toString()}
+            type="text"
+            onChange={(e) => {
+              // If the input is empty, set the label to an empty array rather than an array with an empty string
+              if (e.target.value.length == 0) setLabel([]);
+              else setLabel(e.target.value.split(","));
+            }}
+          />
+        </div>
+        <div className="testing-control">
+          <label>NumTicks:</label>
+          <input
+            defaultValue={numTicks}
+            type="text"
+            onChange={(e) => setNumTicks(parseInt(e.target.value))}
+          />
+        </div>
+        <div className="testing-control">
+          <label>Title:</label>
+          <input defaultValue={title} type="text" onChange={(e) => setTitle(e.target.value)} />
+        </div>
+        <div className="testing-control">
+          <label>X-Label:</label>
+          <input defaultValue={xLabel} type="text" onChange={(e) => setXLabel(e.target.value)} />
+        </div>
+        <div className="testing-control">
+          <label>Y-Label:</label>
+          <input defaultValue={yLabel} type="text" onChange={(e) => setYLabel(e.target.value)} />
+        </div>
+        <div className="testing-control">
+          <label>Dark mode:</label>
+          <input type="checkbox" onChange={(e) => setDarkMode(e.target.checked)} />
         </div>
       </div>
     </>
