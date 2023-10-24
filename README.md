@@ -1,6 +1,6 @@
 # Reusable Bar Graph
 
-This is my reusable bar graph for Jitto, and it can be accessed here [VictorL000.github.io/reusable-bar-graph](https://victorl000.github.io/resable-bar-graph).
+This is my reusable bar graph for Jitto, and it can be accessed here [VictorL000.github.io/reusable-bar-graph/](https://victorl000.github.io/reusable-bar-chart/).
 
 ## Usage
 The component currently accepts 1 mandatory prop and 6 optional props:
